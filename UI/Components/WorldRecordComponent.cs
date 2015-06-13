@@ -27,6 +27,8 @@ namespace LiveSplit.WorldRecord.UI.Components
         private TimeSpan RefreshInterval { get; set; }
         public SpeedrunCom.Record WorldRecord { get; protected set; }
 
+        private bool NeedsInvalidation { get; set; }
+
         public string ComponentName
         {
             get { return "World Record"; }
@@ -99,6 +101,7 @@ namespace LiveSplit.WorldRecord.UI.Components
                 var time = TimeFormatter.Format(WorldRecord.Time[timingMethod]);
                 var runners = WorldRecord.Runners.Aggregate((a, b) => a + " & " + b);
                 InternalComponent.InformationValue = string.Format("{0} by {1}", time, runners);
+                NeedsInvalidation = true;
             }
             else
             {
@@ -128,6 +131,12 @@ namespace LiveSplit.WorldRecord.UI.Components
             }
 
             InternalComponent.Update(invalidator, state, width, height, mode);
+
+            if (NeedsInvalidation)
+            {
+                invalidator.Invalidate(0, 0, width, height);
+                NeedsInvalidation = false;
+            }
         }
 
         private void DrawBackground(Graphics g, LiveSplitState state, float width, float height)
