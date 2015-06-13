@@ -94,7 +94,7 @@ namespace LiveSplit.UI.Components
         private dynamic findCategory(IDictionary<string, dynamic> categories, string categoryName)
         {
             var categoryNameLower = (categoryName ?? "").Trim().ToLowerInvariant();
-            return categories.Where(x => (x.Key ?? "").Trim().ToLowerInvariant() == categoryNameLower).First();
+            return categories.Where(x => (x.Key ?? "").Trim().ToLowerInvariant() == categoryNameLower).First().Value;
         }
 
         private IEnumerable<GamePair> getGameList()
