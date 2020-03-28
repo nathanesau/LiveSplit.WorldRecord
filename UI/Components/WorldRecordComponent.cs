@@ -74,6 +74,7 @@ namespace LiveSplit.WorldRecord.UI.Components
             LastUpdate = TimeStamp.Now;
 
             WorldRecord = null;
+            State.Run.Metadata.WorldRecordTime = null;
 
             try
             {
@@ -100,6 +101,7 @@ namespace LiveSplit.WorldRecord.UI.Components
                     if (leaderboard != null)
                     {
                         WorldRecord = leaderboard.Records.FirstOrDefault();
+                        State.Run.Metadata.WorldRecordTime = WorldRecord.Times.Primary;
                         AllTies = leaderboard.Records;
                     }
                 }
@@ -237,6 +239,7 @@ namespace LiveSplit.WorldRecord.UI.Components
             {
                 IsLoading = true;
                 WorldRecord = null;
+                State.Run.Metadata.WorldRecordTime = null;
                 ShowWorldRecord(mode);
                 Task.Factory.StartNew(RefreshWorldRecord);
             }
